@@ -1,0 +1,35 @@
+<div class="page-header">
+  <h3>
+    <a ng-show="post.link" href="{{post.link}}">
+        {{post.title}}
+    </a>
+        <span ng-hide="post.link">
+            {{post.title}}
+        </span>
+  </h3>
+</div>
+
+<div ng-repeat="comment in post.comments | orderBy:'-upvotes'">
+      <span class="glyphicon glyphicon-thumbs-up"
+            ng-click="incrementUpvotes(comment)"></span>
+    {{comment.upvotes}} - by <a>{{comment.author}}</a>
+      <span style="font-size:20px; margin-left:10px;">
+          {{comment.body}}
+      </span>
+</div>
+<form ng-submit="addComment()"
+      style="margin-top:30px;" ng-show="$root.currentUser">
+  <h3>Add a new comment</h3>
+
+  <div class="form-group">
+    <input type="text"
+           class="form-control"
+           placeholder="Comment"
+           ng-model="body"/>
+  </div>
+  <button type="submit" class="btn btn-primary">Post</button>
+</form>
+
+<div ng-hide="$root.currentUser || $root.loggingIn">
+  <h3>You need to Log In or Register before you can add a post.</h3>
+</div>
